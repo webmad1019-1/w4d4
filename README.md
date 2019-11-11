@@ -21,6 +21,12 @@
 - Search in Spotify using its API
 - Seeding movies in your Mongo and listing them
 
+# Tomorrow - day w4d5
+
+- More on Mongoose interaction using Mongoose
+- Password encrypting
+- Authentication, Authorisation, login, sign up
+
 # Goals
 
 - Learn how to use Irongenerate
