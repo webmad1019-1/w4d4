@@ -24,7 +24,7 @@
 # Tomorrow - day w4d5
 
 - More on Mongoose interaction using Mongoose
-- Password encrypting
+- Password encryption
 - Authentication, Authorisation, login, sign up
 
 # Goals
