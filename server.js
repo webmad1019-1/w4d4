@@ -1,21 +1,58 @@
 const express = require("express");
 const app = express();
 const hbs = require("hbs");
+const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const Movies = require("./models/Movies");
 
 app.set("views", __dirname + "/views");
+// ey javi! static resources here :) :)
 app.set("view engine", "hbs");
 // app.use(hbs);
 app.use(express.static("public"));
+// you have to import and use this middleware if you want express to understand
+// data sent via POST
+app.use(bodyParser.urlencoded({ extended: true }));
 
+// mongoose has to connect to the DB where your data is stored.
+// Here the DB name is "movies" (found in "mongodb://localhost/movies")
 mongoose
   .connect("mongodb://localhost/movies", { useNewUrlParser: true })
   .then(x => console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`))
   .catch(err => console.error("Error connecting to mongo", err));
 
+// querystring / queryparams experiment
 app.get("/getMovieByYear", (req, res) => {
   res.render("getMovieByYear", { master: "Manuel" });
+});
+
+// movie creation -> this renders the movie creation form
+app.get("/createMovie", (req, res) => {
+  // this renders the movie creation form
+  res.render("createMovie", { master: "Molleda" });
+});
+
+// this gets all the new movie data sent via the /createMovie endpoint's form and
+// passes it forward to mongoose and the db
+app.post("/createMovieViaForm", (req, res) => {
+  // naive data validation
+  if (req.body.title.length === 0) {
+    res.status(500).json({ error: true });
+    return;
+  }
+
+  // here we use the object req.body which contains all the information
+  // passed from the form via POST in order to create the movie
+  // using the Movies mongoose model
+  Movies.create(req.body).then(movieCreated => {
+    // Once the movie has been created and added to the DB
+    // we output to the client the movie details
+    res.json({
+      movieCreated: true,
+      timestamp: new Date(),
+      movieCreated
+    });
+  });
 });
 
 // http://localhost:3000/consecutiveYearsMoviesQueryParams?year=2000&genres=Drama,Action
@@ -66,6 +103,7 @@ app.get("/consecutiveYearsMovies/:year/:genres?", (req, res) => {
     .then(nextYearPayload => {
       // here we return to the client the resulting arrays of movies for both years
       res.json({
+        manu: true,
         mainYearMovies,
         nextYearPayload
       });

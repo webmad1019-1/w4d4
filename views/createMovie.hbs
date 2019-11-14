@@ -11,21 +11,16 @@
     {{#if master}}
         <h1>Hello master {{master}}</h1>
     {{/if}}
-    {{!-- queryString example, uncomment these lines to make this work --}}
-    {{!-- <form action="/consecutiveYearsMoviesQueryParams" method="GET">
-        <input type="text" name="year" value="" placeholder="Movie Year">
-        <input type="text" name="genres" value="Drama,Action" placeholder="Genres">
 
-        <input type="submit" value="Find movies of this year">
-    </form> --}}
-
-    <form method="GET">
+    <form method="POST" action="/createMovieViaForm">
+        <input type="text" name="duration" value="2h 00min" placeholder="Duration">
+        <input type="text" name="title" value="Molledas life!" placeholder="Title">
         <input type="text" name="year" value="2000" placeholder="Movie Year">
+        <input type="text" name="director" value="Mr. Molleda" placeholder="Director">
         <input type="text" name="genres" value="Drama,Action" placeholder="Genres">
+        <input type="text" name="rate" value="9.4" placeholder="rate">
 
-        <input type="submit" value="Find movies of this year">
+        <input type="submit" value="Save new movie">
     </form>
-
-    <script src="js/form.js"></script>
 </body>
 </html>
